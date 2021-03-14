@@ -1,0 +1,68 @@
+---
+title: "RMarkdown_Demo_1"
+author: ", Sandra Angers-Blondin, John Godlee"
+date: "24/Jan/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#install and load the relevant packages
+##install.packages("dplyr", "tidyr", "pander")
+library(dplyr) #useful for data manipulation
+library(tidyr) #useful to format data
+library(pander) #creates tables
+
+#set working directory to where data files are stored
+#setwd()
+
+#Import data from csv file in directory and assign data.frame to object 'elongation'
+elongation <- read.csv("EmpetrumElongation.csv", sep = ",") #separated by commas
+head(elongation)
+
+#Tidy the data
+#Put in long format with gather()
+elongation_long <- gather(elongation, 
+                          Year, #name column 
+                          Length, #name column
+                          c(X2007, X2008, X2009, X2010, X2011, X2012)) #Gather the lengths by year
+head(elongation_long) #preview the data
+
+#investigating the data
+#create a boxplot of the 'elongation_long'
+boxplot(Length ~ Year,
+        data = elongation_long, #call data from data.frame
+        xlab = 'Year', #x-axis title
+        ylab = 'Elongation (cm)', #y-axis title
+        main = "Annual growth of Empetrum") #main title
+```
+
+```{r eval=FALSE}
+# missing Germination.csv file
+
+# germination of seeds subjected to toxic solutions
+#Import data from csv file in directory and assign data.frame to object 'germination'
+germination <- read.csv("Germination.csv", sep = ",") #separated by commas
+
+# Use filter() to keep only the rows of `germination' for species `SR' 
+germinSR <- filter(germination, Species == 'SR')
+
+#create histogram of germination of species 'SR' with 8 breaks
+#use $ to access variables in column Nb_seeds_germin 
+hist(germinSR$Nb_seeds_germin, breaks = 8)
+
+# Use mutate() to create a new column of the germination percentage using the total number of seeds
+# and the number of seeds that germinated
+germin_percent <- mutate(germination, Percent = Nb_seeds_germin / Nb_seeds_tot * 100)
+
+# Use a pipe to get a table of summary statistics for each Seed type
+germin_summ <- germin_percent %>%
+  group_by(Species) %>%
+  summarise("Mean germination per" = mean(Nb_seeds_germin),
+            "Max germination per" = max(Nb_seeds_germin),
+            "Min germination per" = min(Nb_seeds_germin))
+```
+
