@@ -1,0 +1,390 @@
+---
+title: "hw2"
+author: "Edwin Rivas Meraz"
+date: "1/29/2020"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+# 1
+```
+?ncol()
+
+NCOL()
+```{r}
+# 5
+v <- c(8:19)
+w <- v[1:4] # first four elements of vector v
+w
+
+# 6
+d <- c(8:20)
+length(d)
+h <- d[5:9] # middle 5 elements of vector d
+h 
+
+# 7
+length(w)
+```
+```{r}
+# 8
+```
+- Type: what it is
+- Length: amount of elements
+- Attributes: additional metadata
+``` {r}
+# 9
+a <- c(3,FALSE) 
+b <- c("a",1)
+c <- c(4L, 2)
+```
+- "a" would be considered logical if "FALSE" was not coerced into a 0 but it will be considered double
+- "b" will be considered as a character due to the letter within it
+- "c" will be considered a double
+``` {r}
+typeof(a)
+typeof(b)
+typeof(c)
+```
+
+``` {r}
+# 10
+```
+- character
+- double
+- integer
+- logical
+- complex (rare)
+- raw (rare)
+```{r}
+# 11
+```
+"one< 2" compares a character to an integer and is therefore considered FALSE
+```{r}
+# 12
+y <- c(FALSE,NA_character_)
+typeof(y)
+```
+Logical vectors are very flexible in that they can be coerced into other data types
+```{r}
+# 13
+e <- d*2 # multiply each value in d by 2 and assign to e
+e
+e[length(e)]
+
+# 14
+#?seq
+a <- seq(from = 0.6, to = 1.9, length.out = 11)
+a
+b <- a >= 1.1
+b
+
+# 15
+a[a >= 1.1] <- 2.0
+a
+# 16
+l <-c(list(1,2),c(3,4))
+j=list(list(1,2),c(3,4))
+str(l)
+str(j)
+
+# 17
+unlist(l)
+unlist(j)
+```
+```{r}
+# 18
+```
+Factors are useful to use character vectors in place of integers which can often be easier to interpret in statistics
+```{r}
+# 19
+my.fac <- factor(c("yes","yes","no","yes","yes","yes"))
+table(my.fac) #freq no and yes
+
+# 20
+f1 <- factor(letters)
+levels(f1) <-rev(levels(f1))
+f2 <- rev(factor(letters))
+f3 <- factor(letters, levels=rev(letters))
+f1
+f2
+f3
+```
+- f1 revereses both the levels and the values 
+- f2 did not reverse the levels but did reverse the values
+- f3 revereses the levels but not the values
+```{r}
+# 21
+x <- c(1, 2, 4)
+x
+x[1]
+mymatrix <- matrix(c(1, 3, 5, 8), 2, 2)
+mymatrix
+is.matrix(mymatrix)
+is.array(mymatrix)
+```
+It will return TRUE
+```{r}
+# 22
+d <- data.frame(kids = c("Jack", "Jill"), ages = c(12, 10))
+d
+```
+Trying to make a data frame that ask for different number of rows by putting two variables under 'kids' but 3 variables under 'ages'
+```{r}
+# Bonus
+library(tidyverse)
+f2 <- tibble(kids=c("Jack","Jill"),ages=c(12,10))
+f2
+```
+A tibble is said to be lazy in transforming the input and will generally 'complain' more than data frames, however, this causes potential issues to be addressed earlier and can lead to a well-expressed and robust code
+```{r}
+# 23 
+as.matrix(d)
+```
+as.matrix(d) created a matrix where the columns were named 'kids' and 'ages' 
+```{r}
+# 24
+d1 <- data.frame(names = c("Jack", "Jill", "John"), states = c("CA", "IL", "IL"))
+d2 <- data.frame(ages = c(10, 7, 12), names = c("Jill", "Jillian", "Jack"))
+d1
+d2
+merge(d1, d2)
+names(d2) <- c("ages", "kids")
+d12 <- merge(d1,d2)
+d12
+d2 <- rbind(d2,list("15","Jill"))
+d2
+```
+```{r}
+# 25
+empty <- data.frame() # create dataframe with 0 row and 0 column
+class(empty) # make sure it is a dataframe
+empty
+ncol(empty) # check column
+nrow(empty) # check row
+```
+Yes, you can create a data frame with 0 rows and 0 columns
+```{r}
+# 26
+x <- iris
+x_filter <- filter(x, x$Sepal.Width<=3) # filter out all values of x in the column sepal width to those less than or equal to 3
+x_filter$Sepal.Width # print results
+
+xhist <- ggplot(x_filter, aes(x_filter$Sepal.Width)) +
+geom_histogram(aes(fill=..count..), binwidth = 0.1) +
+  scale_fill_gradient("Count", low = "yellow", high = "blue") # create histogram
+xhist
+```
+```{r}
+# 27
+d <- data.frame(gender = c("M", "M", "F", "M", "F", "F"),
+        age=c(47, 59, 21, 32, 33, 24),
+        income=c(55000, 88000, 32450, 76500, 123000, 45650))# create data frame d 
+apply(d, 2, max) #use apply on dataframe d
+```
+The function returned the maximum value from each column 
+```{r}
+# 28
+```
+A function can have a name, an argument, and a body of code. However, an argument is not needed.
+```{r}
+# 29
+```
+The local environment within a function can use 'return' to move an object 
+or the value of an object to the global environment
+```{r}
+# 30
+```
+debug()
+```{r}
+# 31
+```
+Ensuring that the function is closed such that the > appears in the console and retyping the function can help debug because common mistakes include unclosed parantheses or braces 
+```{r}
+# 32
+```
+- stop()
+- stopifnot()
+```{r}
+# 33
+```
+Long functions can likely be split into smaller chunks and can be used to call each other.
+Keeping functions short is beneficial because it makes code easier to update, easier to
+identify bugs, and easily testable
+```{r}
+# 34
+```
+Local variables can exist within a function's environment and cannot be called outside of the function. A
+function can deliver a global variable using 'return'and a global variable can be included within
+a function by incliding it within the arguments.
+```{r}
+# 35
+wave_to_freq <- function(wave) {
+  #note wavelength needs to be in meters
+  freq <- (299792458/wave) #speed of light in m/s
+  freq
+}
+wave_to_freq(0.02)
+
+# 36
+x <- wave_to_freq(0.02) # assign to object x
+x #call object x
+```
+The function still works
+```{r}
+# 37
+
+nm_to_m <- function(nm) {
+  m <- nm/1E9 #1E9 nanometers equal to 1 meter
+  return(m) #return local variable to global environment
+}
+nm_to_m(900)
+```
+
+```{r}
+# 38
+um_to_ghz <- function(um) {
+  ghz <- 299792458/(um/1E6) #speed of light in meters divided by micrometers converted to meters
+  return(ghz) #return frequency
+}
+
+# 39
+um_to_ghz(30000)
+
+```
+Band = X
+
+```{r}
+# 40
+x <- rnorm(40) #generate 40 values normally distributed
+head(x) # preview data
+for (n in x) {
+  s <- x[1:10] #extract first 10 elements
+  x2 <- s^2 #square the elements called
+  return(x2) #return the squared values
+}
+x2
+# 41
+e <- 4:29
+head(e)
+for(n in e) { 
+    if(n %% 2 == 0) # divide by 2 and keep value if remainder is 0
+    print(n) # return object
+}
+
+# 42
+m <- 100:190
+str(m)
+countby10 <- for (n in m) {if (n %% 10 == 0) {print(n)
+  
+}
+  
+}
+```
+
+```{r}
+# 43
+z <- matrix(sample(100), 10, 10) # create matrix
+zlist <- list(z=z) #create list
+lapply(X = zlist, FUN = function(x) {
+  z[3, ] <- 'ciao' # replace values in third row with ciao
+  z[, 5] <- 'ciao' #replace values in column 5 with ciao
+  return(z) # return object
+})
+```
+
+```{r}
+# 44
+```
+A loop is a series of specificed and organized actions for datapoints or other variables/parts to undergo . In my project I have various treatments for sediments which are incubated in triplicate and can lead to a large dataset of a wide variety of variables that often need a change in the units it is expressed in. A for-loop can help calculate the conversions from one unit to another.
+```{r}
+# 45
+foo = seq(1, 100, by=2) # create object 1-100 count by 2
+foo
+
+foo.squared = NULL #create empty vector to populate
+foo.squared
+
+for (i in 1:50 ) {
+foo.squared[i] = foo[i]^2 #square values in foo and grow in foo.squared
+}
+foo.squared
+```
+We can create an empty vector (foo.squared) and use a loop to populate or 'grow' variables passed through the 'for' loop that squares the values in foo
+```{r}
+# 46
+```
+People look down on loops in R because they are oten slower than applying a command to a vector. The apply functions are preffered as opposed to a for-loop however apply functions are built with for-loops within them and are therefore not faster than for-loops. Loops are useful if you want to apply the same set of functions to a large set of datapoints. 
+```{r}
+# 47
+mtcars
+cars <- mtcars
+unlist(lapply(cars, class))
+cars[] <- lapply(cars, function(x) sd(x)/mean(x))
+cars[1, ]
+```
+
+```{r}
+# 48
+scale01 <- function (x) {
+  rng <-range(x, na.rm=TRUE)
+  (x-rng[1] / rng[2] - rng[1])
+}
+x <- data.frame(seq(1:26), letters, rnorm(26))
+x
+xn <-lapply(select_if(x, is.numeric), scale01) #every numeric column
+xn
+
+
+```
+
+```{r}
+# 49
+formulas <- list(
+  mpg ~ disp, 
+  mpg ~ I(1 / disp), 
+  mpg ~ disp + wt,
+  mpg ~ I(1 / disp) + wt
+)
+r <- list()
+r
+for (i in 1:length(formulas)){
+  r[[i]] <- lm(formulas[[i]], 
+               data = mtcars)
+}
+r
+```
+
+
+```{r}
+# 50
+
+ti.for <- Sys.time()
+r <- list()
+for (i in 1:length(formulas)){
+  r[[i]] <- lm(formulas[[i]], 
+               data = mtcars)}
+te.for <- Sys.time()
+t.for <- te.for-ti.for
+t.for # time difference it took to run the for loop
+
+ti.lapply <- Sys.time()
+lapply(formulas, function(x) lm(formula = x, data = mtcars))
+te.lapply <- Sys.time()
+t.lapply <- te.lapply-ti.lapply
+t.lapply #time difference it took for lapply
+
+time.diff <- t.for-t.lapply
+time.diff #time difference between for loop and lapply
+```
+
+
